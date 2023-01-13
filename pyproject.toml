@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "in_toto_layout_generator"
+version = "0.0.1"
+authors = [
+    { name = "Alan Chung Ma", email = "alanchunggt@gmail.com" },
+]
+description = "Prototype CLI to generate in-toto layouts easily"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "in-toto",
+    "pydantic",
+    "pyyaml",
+    "securesystemslib",
+    "tomlkit",
+]
+
+[project.scripts]
+in-toto-layout-gen = "in_toto_layout_generator:main"
