@@ -1,17 +1,15 @@
-from datetime import datetime
+from datetime import date, datetime
 from pydantic import BaseModel
 
 
 class PrivKey(BaseModel):
-    uri: str
-    backend: str | None = None
-    scheme: str | None = None
+    path: str
+    key_type: str | None = None
 
 
 class PubKey(BaseModel):
-    uri: str
-    backend: str | None = None
-    scheme: str | None = None
+    path: str
+    key_type: str
 
 
 class Step(BaseModel):
@@ -31,8 +29,8 @@ class Inspection(BaseModel):
 
 
 class Config(BaseModel):
-    signing_key: PrivKey | None = None
-    expires: datetime | str | None = None
+    signer: PrivKey | None = None
+    expires: datetime | date | str | None = None
     readme: str | None = None
     keys: dict[str, PubKey]
     steps: list[Step]

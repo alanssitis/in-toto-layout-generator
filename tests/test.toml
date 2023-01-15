@@ -1,40 +1,32 @@
-expires = "2024-01-01 00:00"
+[signer]
+path = "tests/alice"
 
-[signing-key]
-uri = "bob"
+[keys.alice]
+path = "tests/alice.pub"
+key_type = "rsa"
 
-[keys.my-pubkey-1]
-uri = "hashicorp-vault://server1/transit-secrets-engine/my-pubkey-1"
-backend = "https://github.com/secure-systems-lab/securesystemslib/signer/_hashicorp_vault_signer.py"
-scheme = "rsassa-pss-sha256"
-
-[keys.my-pubkey-2]
-uri = "aws-kms://arn:<partition>:kms:<region>:<account-id>:key/<key-id>"
-backend = "https://github.com/secure-systems-lab/securesystemslib/signer/_aws_kms_signer.py"
-scheme = "ed25519"
-
-[keys.my-pubkey-3]
-uri = "fulcio://someone@example.com"
-backend = "https://github.com/secure-systems-lab/securesystemslib/signer/_tap123_signer.py"
+[keys.bob]
+path = "tests/bob.pub"
+key_type = "rsa"
 
 [[steps]]
 name = "clone"
 expected_command = "git clone 'https://github.com/in-toto/demo-project.git'"
 expected_products = ["CREATE demo-project/foo.py"]
-pubkeys = ["my-pubkey-1"]
+pubkeys = ["alice"]
 
 [[steps]]
 name = "update-version"
 expected_materials = ["MATCH demo-project/* WITH PRODUCTS FROM clone"]
 expected_products = ["MODIFY demo-project/foo.py"]
-pubkeys = ["my-pubkey-2"]
+pubkeys = ["bob"]
 
 [[steps]]
 name = "package"
 expected_command = "tar --exclude .git -zcvf demo-project.tar.gz demo-project"
 expected_materials = ["MATCH 'demo-project/*' WITH PRODUCTS FROM update-version"]
 expected_products = ["CREATE demo-project.tar.gz"]
-pubkeys = ["my-pubkey-3"]
+pubkeys = ["alice", "bob"]
 
 [[inspect]]
 name = "untar"
