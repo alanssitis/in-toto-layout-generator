@@ -55,7 +55,7 @@ def _parse_expires(expires):
     if expires == None:
         return None
 
-    elif isinstance(expires, datetime) or isinstance(expires, date) :
+    elif isinstance(expires, datetime) or isinstance(expires, date):
         return expires.isoformat()
 
     elif match := re.fullmatch(r"^(\d+)(s|m|h|d|w)$", expires):
@@ -74,7 +74,8 @@ def _parse_expires(expires):
         elif unit == 'w':
             delta = timedelta(weeks=int(val))
 
-        return (now + delta).isoformat(timespec='seconds').replace('+00:00', 'Z')
+        return (now + delta).isoformat(timespec='seconds').replace(
+            '+00:00', 'Z')
 
     else:
         raise Exception(f"Could not parse layout expiration '{expires}'")
@@ -95,16 +96,24 @@ def _import_publickey_from_file(filepath, key_type):
 
 
 def _update_step(step, keys):
-    step["expected_materials"] = [mat.split(" ") for mat in step["expected_materials"]]
-    step["expected_products"] = [prod.split(" ") for prod in step["expected_products"]]
+    step["expected_materials"] = [
+        mat.split(" ") for mat in step["expected_materials"]
+    ]
+    step["expected_products"] = [
+        prod.split(" ") for prod in step["expected_products"]
+    ]
     step["pubkeys"] = [keys[id]["keyid"] for id in step["pubkeys"]]
     step["expected_command"] = step["expected_command"].split(" ")
     return step
 
 
 def _update_inspect(inspect):
-    inspect["expected_materials"] = [mat.split(" ") for mat in inspect["expected_materials"]]
-    inspect["expected_products"] = [prod.split(" ") for prod in inspect["expected_products"]]
+    inspect["expected_materials"] = [
+        mat.split(" ") for mat in inspect["expected_materials"]
+    ]
+    inspect["expected_products"] = [
+        prod.split(" ") for prod in inspect["expected_products"]
+    ]
     inspect["run"] = inspect["run"].split(" ")
     return inspect
 
