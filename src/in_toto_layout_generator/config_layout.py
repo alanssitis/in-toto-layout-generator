@@ -33,5 +33,5 @@ class Config(BaseModel):
     expires: datetime | date | str | None = None
     readme: str | None = None
     keys: dict[str, PubKey]
-    steps: list[Step]
-    inspect: list[Inspection]
+    steps: list[Step] = []
+    inspect: list[Inspection] = []

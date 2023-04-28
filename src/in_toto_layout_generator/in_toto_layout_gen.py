@@ -127,7 +127,7 @@ def main():
 
     signer_key = config.pop("signer")
     if args.signer != None:
-        signer_key = args.signer
+        signer_key["path"] = args.signer
     if signer_key == None:
         raise Exception('Do not have a signing key')
     signer = interface.import_privatekey_from_file(signer_key["path"])
