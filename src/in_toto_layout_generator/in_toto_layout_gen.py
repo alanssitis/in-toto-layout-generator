@@ -103,7 +103,10 @@ def _update_step(step, keys):
         prod.split(" ") for prod in step["expected_products"]
     ]
     step["pubkeys"] = [keys[id]["keyid"] for id in step["pubkeys"]]
-    step["expected_command"] = step["expected_command"].split(" ")
+
+    expected_command = step.pop("expected_command")
+    if expected_command:
+        step["expected_command"] = expected_command.split(" ")
     return step
 
 

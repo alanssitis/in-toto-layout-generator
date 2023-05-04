@@ -18,7 +18,7 @@ class Step(BaseModel):
     expected_materials: list[str] = []
     expected_products: list[str] = []
     pubkeys: list[str]
-    expected_command: str = ''
+    expected_command: str | None = None
 
 
 class Inspection(BaseModel):
